@@ -4,7 +4,7 @@ version: "3.8"
 
 services:
   tonyapp1:
-    image: 
+    image: ghcr.io/antonymena999/finalquintoa:1.0.0
     deploy:
       replicas: 1
       labels:
