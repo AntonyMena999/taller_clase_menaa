@@ -1,0 +1,28 @@
+#VERSION NAME DE SERVICIOS , DESPLEGAR SUBDOMINIOS BLOQUE DOMINIO, PUERTO REDES Y VOLUMENES DONDE GUARD LOS DATOS 
+
+version: "3.8"
+
+services:
+  tonyapp1:
+    image: 
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.tonyapp1.entrypoints=http"
+        - "traefik.http.routers.tonyapp1.rule=Host(`tonyapp1.byronrm.com`)"
+        - "traefik.http.middlewares.tonyapp1-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.tonyapp1.middlewares=tonyapp1-https-redirect"
+        - "traefik.http.routers.tonyapp1-secure.entrypoints=https"
+        - "traefik.http.routers.tonyapp1-secure.rule=Host(`tonyapp1.byronrm.com`)"
+        - "traefik.http.routers.tonyapp1-secure.tls=true"
+        - "traefik.http.routers.tonyapp1-secure.tls.certresolver=http"
+        - "traefik.http.routers.tonyapp1-secure.service=tonyapp1"
+        - "traefik.http.services.tonyapp1.loadbalancer.server.port=80"
+        - "traefik.docker.network=traefik-public"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
