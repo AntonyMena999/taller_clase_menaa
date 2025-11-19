@@ -53,7 +53,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_SSH_PORT }}
           script: |
-            echo "✅Conexion exitosa desde GitHub Actions"
+            echo "✅ Conexion exitosa desde GitHub Actions"
             hostname
             whoami
             ls -la
@@ -68,3 +68,23 @@ jobs:
           port: ${{ secrets.VPS_SSH_PORT }}
           source: "stack.yml"
           target: "/home/${{ secrets.VPS_USER}}/despliegue"
+
+      - name: Despliegue de los servicios
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_SSH_PORT }}
+          script: |
+          
+            echo "🟩 Desplegando servicios"
+
+            # Borrar el stack SIEMPRE (si no existe no falla)
+            docker stack rm cristian || true
+
+            echo "==> Descargando la imagen del GHCR"
+            docker pull ghcr.io/antonymena999/finalquintoa:1.0.0
+
+            echo "==> Desplegando stack..."
+            docker stack deploy -c stack.yml --with-registry-auth cristhian
