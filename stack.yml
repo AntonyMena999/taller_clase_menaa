@@ -16,9 +16,9 @@ services:
         - "traefik.http.routers.tonyapp1-secure.entrypoints=https"
         - "traefik.http.routers.tonyapp1-secure.rule=Host(`tonyapp1.byronrm.com`)"
         - "traefik.http.routers.tonyapp1-secure.tls=true"
-        - "traefik.http.routers.tonyapp1-secure.tls.certresolver=http"
+        - "traefik.http.routers.tonyapp1-secure.tls.certresolver=http"  
         - "traefik.http.routers.tonyapp1-secure.service=tonyapp1"
-        - "traefik.http.services.tonyapp1.loadbalancer.server.port=80"
+        - "traefik.http.services.tonyapp1.loadbalancer.server.port=5000"
         - "traefik.docker.network=traefik-public"
     networks:
       - traefik-public
