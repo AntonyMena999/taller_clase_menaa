@@ -69,7 +69,7 @@ jobs:
           source: "stack.yml"
           target: "/home/${{ secrets.VPS_USER}}/despliegue"
 
-      - name: Despliegue de los servicios
+      - name: Despliegue de los servicios ---------
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -81,10 +81,11 @@ jobs:
             echo "🟩 Desplegando servicios"
 
             # Borrar el stack SIEMPRE (si no existe no falla)
-            docker stack rm cristian || true
+            #docker stack rm cristian || true
 
-            echo "==> Descargando la imagen del GHCR"
-            # docker pull ghcr.io/antonymena999/finalquintoa:1.0.0
+            #echo "==> Descargando la imagen del GHCR"
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u byronmoreno --password-stdin
+            docker pull ghcr.io/antonymena999/finalquintoa:1.0.0
 
-            echo "==> Desplegando stack..."
-            docker stack deploy -c stack.yml --with-registry-auth cristhian
+            #echo "==> Desplegando stack..."
+            #docker stack deploy -c stack.yml --with-registry-auth cristhian
